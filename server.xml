@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="new server">
+
+    <!-- Enable features -->
+    <featureManager>
+        <feature>jsp-2.3</feature>
+	<feature>jndi-1.0</feature>
+        <feature>servlet-3.1</feature>
+        <feature>jms-2.0</feature>
+        <feature>jdbc-4.1</feature>
+        <feature>ejblLite-3.1</feature>
+
+    </featureManager>
+
+    <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
+    <httpEndpoint id="defaultHttpEndpoint"
+                  httpPort="9080"
+                  httpsPort="9443" />
+	<jdbcDriver id="DB2_Universal_JDBC_Driver_Provider_(XA)" javax.sql.DataSource="com.ibm.db2.jcc.DB2XADataSource">
+        <library>
+            <file name="/config/lib/db2jcc4.jar"/>
+            <file name="/config/lib/sqlj4.zip"/>
+            <!--  <file name="/config/lib/db2jcc_license_cisuz.jar"/>  -->
+        </library>
+    </jdbcDriver>
+	<dataSource id="TradeDataSource" jdbcDriverRef="DB2_Universal_JDBC_Driver_Provider_(XA)" jndiName="jdbc/TradeDataSource">
+        <properties.db2.jcc beginTranForVendorAPIs="false" databaseName="tradedb" portNumber="50000" retrieveMessagesFromServerOnGetMessage="false" serverName="192.168.1.42" user="db2inst1" password="db2rules" useTransactionRedirect="false" />
+        <connectionManager agedTimeout="0" connectionTimeout="180" maxIdleTime="1800" maxPoolSize="10" minPoolSize="0" reapTime="180"/>
+    </dataSource>
+    <!-- Automatically expand WAR files and EAR files -->
+    <applicationManager autoExpand="true"/>
+
+    <!-- Default SSL configuration enables trust for default certificates from the Java runtime -->
+    <ssl id="defaultSSLConfig" trustDefaultCerts="true" />
+</server>
+
+<!-- /opt/ol/wlp/usr/servers/defaultServer/server.xml  -->
+
